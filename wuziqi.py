@@ -26,6 +26,7 @@ Placed=np.full((15,15),0)
 Board=np.full((15,15),'')
 game_finished = False
 move_history = []
+black_wins, white_wins = 0, 0
 
 def reset():
     global step, Placed, Board, game_finished, move_history, background
@@ -50,7 +51,7 @@ def reset():
     background.create_oval(295, 455, 305, 465,fill='black')
 
 def place_a_piece(event):
-    global step, Placed, Board, game_finished, move_history
+    global step, Placed, Board, game_finished, move_history, black_wins, white_wins
     if game_finished:
         return
     for current_y in range (0,15):
@@ -101,8 +102,11 @@ def place_a_piece(event):
             game_finished = True
             if Board[current_x][current_y] == 'b':
                 tkinter.messagebox.showinfo('', 'Black wins!')
+                black_wins += 1
             else:
                 tkinter.messagebox.showinfo('', 'White wins!')
+                white_wins += 1
+        scoreboard.config(text=f"Black {black_wins} : {white_wins} White")
 
 def regret(event):
     global step, Placed, Board, move_history
@@ -124,6 +128,8 @@ background.pack()
 def quit():
     root.quit()
 
+scoreboard = Label(root, text="Black 0 : 0 White", font=('Times New Roman', 16))
+scoreboard.pack()
 reset_button=Button(root, text="Reset", width=10, height=1, command=reset, font=('Times New Roman',15))
 reset_button.pack()
 quit_button=Button(root, text="Quit", width=10, height=1, command=quit, font=('Times New Roman',15))
