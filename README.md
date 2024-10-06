@@ -1,2 +1,2 @@
 # 2024CUSEHACK
-Gomoku game
+Wuziqi game
